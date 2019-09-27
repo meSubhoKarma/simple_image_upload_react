@@ -29,7 +29,11 @@ class App extends React.Component {
         },
       })
       .then(res => {
-        console.log(res)
+        const data = res.data
+        // console.log(data)
+        const baseUrl = data.baseUrl
+        const fileName = data.fileName
+        this.setState({ baseUrl, fileName })
       })
       .catch(err => console.log(err))
   }
@@ -37,16 +41,11 @@ class App extends React.Component {
   render() {
     return (
       <div>
-        <input
-          style={{
-            display: "none",
-          }}
-          type="file"
-          onChange={this.fileSelectedHandler}
-          ref={fileInput => (this.fileInput = fileInput)}
-        />
-        <button onClick={() => this.fileInput.click()}>Pick File</button>
+        <input type="file" onChange={this.fileSelectedHandler} />
         <button onClick={this.fileUploadHandler}>Upload</button>
+        <div>
+          <p>{`${this.state.baseUrl}/${this.state.fileName}`}</p>
+        </div>
       </div>
     )
   }
